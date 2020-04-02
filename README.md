@@ -40,6 +40,7 @@ jitsi_meet_authentication: anonymous
 # https://github.com/jitsi/jitsi-meet/issues/422
 # https://github.com/jitsi/jitsi-meet/pull/427
 jitsi_meet_disable_third_party_requests: true
+
 # These debconf settings represent answers to interactive prompts during installation
 # of the jitsi-meet deb package. If you use custom SSL certs, you may have to set more options.
 jitsi_meet_debconf_settings:
@@ -137,10 +138,22 @@ Including an example of how to use your role (for instance, with variables passe
       tags: letsencrypt
 
     - role: ansible-role-jitsi-meet
-      jitsi_meet_ssl_cert_path: "/etc/letsencrypt/live/{{ jitsi_meet_server_name }}/fullchain.pem"
-      jitsi_meet_ssl_key_path: "/etc/letsencrypt/live/{{ jitsi_meet_server_name }}/privkey.pem"
+      jitsi_meet_webserver: 'nginx'
+      jitsi_meet_authentication: "internal_plain" # "anonymous"
+      jitsi_meet_customize_the_ui: true
+      jitsi_meet_appname: 'Meet Example Organisation'
+      jitsi_meet_org_link: "https://example.de"
+      jitsi_meet_default_remote_display_name: "Guest"
+      jitsi_meet_default_background: '#1BB4A0'
+      jitsi_meet_use_nightly_apt_repo: false
+      jitsi_meet_configurations:
+        - key: startWithAudioMuted
+          value: 'true'
+        - key: startWithVideoMuted
+          value: 'true'
+        - key: disableThirdPartyRequests
+          value: 'true'
       become: yes
-      tags: jitsi
 ```
 
 Running the tests
