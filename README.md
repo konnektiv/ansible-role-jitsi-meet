@@ -109,18 +109,7 @@ jitsi_meet_configure_firewall: false
 
 Screen sharing
 --------------
-Jitsi Meet supports screen sharing functionality via browser extensions.
-Only the party sharing the screen needs the extension installed—other participants
-in the meeting will be able to view the shared screen without installing anything.
-You'll need to build your own browser extension for Chrome and/or Firefox.
-See the [Jidesha] documentation for detailed build instructions. This role
-has only been tested with custom Chrome extensions.
-
-Chrome forbids installation of extensions from unapproved websites, so you must
-download the `.crx` file directly, then navigate to `chrome://extensions` and
-drag-and-drop the extension to install it. If you want to grant another
-participant screen-sharing support, share the URL for the extension with them
-via the Jitsi Meet text chat pane.
+Scren sharing should just work with Chrome or Firefox without any extensions.
 
 Dependencies
 ------------
@@ -182,8 +171,7 @@ MIT
 Author Information
 ------------------
 
-[Freedom of the Press Foundation]
-
+[Konnektiv]: https://konnektiv.de 
 [Jitsi Meet]: https://github.com/jitsi/jitsi-meet
 [thefinn93.letsencrypt]: https://github.com/thefinn93/ansible-letsencrypt
 [LetsEncrypt]: https://letsencrypt.org/
