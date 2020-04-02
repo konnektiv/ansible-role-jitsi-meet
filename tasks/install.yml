@@ -1,0 +1,39 @@
+---
+- name: Install Jitsi host key
+  apt_key:
+    url: "{{jitsi_meet_apt_key_url}}"
+    state: present
+
+- name: Determine repo strategy.
+  set_fact:
+    jitsi_strategy: "{{ 'unstable' if jitsi_meet_use_nightly_apt_repo else 'stable' }}"
+
+- name: Install Jitsi apt repo.
+  apt_repository:
+    repo: "{{ item.value.repo_url }}"
+    state: "{{ 'present' if jitsi_strategy == item.key else 'absent' }}"
+    # Ansible will automatically add the ".list" suffix.
+    filename: /etc/apt/sources.list.d/jitsi_meet
+  with_dict: "{{ jitsi_meet_apt_repos }}"
+
+- name: Set debconf options for jitsi-meet.
+  debconf:
+    name: "{{ item.name }}"
+    question: "{{ item.question }}"
+    value: "{{ item.value }}"
+    vtype: "{{ item.vtype }}"
+  with_items: "{{ jitsi_meet_debconf_settings }}"
+
+- name: Install webserver
+  apt:
+    name: "{{jitsi_meet_webserver}}"
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Install jitsi packages
+  apt:
+    name: jitsi-meet
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600

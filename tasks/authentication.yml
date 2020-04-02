@@ -1,0 +1,39 @@
+# enable authentication
+- name: Set authentication for {{ jitsi_meet_server_name }}
+  lineinfile:
+    path: "{{jitsi_meet_prosody_config}}"
+    insertafter: '\s*-- enabled = false'
+    regexp: '\s*authentication = '
+    line: '        authentication = "{{jitsi_meet_authentication}}"'
+    firstmatch: yes
+  notify:
+    - restart prosody
+
+- name: Add anonymous guest domain to prosody
+  blockinfile:
+    path: "{{jitsi_meet_prosody_config}}"
+    marker: "-- {mark} ANSIBLE MANAGED BLOCK"
+    state: "{{'absent' if (jitsi_meet_authentication == 'anonymous') else 'present'}}"
+    block: |
+      VirtualHost "guest.{{jitsi_meet_server_name}}"
+          authentication = "anonymous"
+          c2s_require_encryption = false
+  notify:
+    - restart prosody
+
+- name: Set anonymous domain in jitsi
+  lineinfile:
+    path: "{{jitsi_meet_jitsi_config}}"
+    regexp: 'anonymousdomain:'
+    line: "{{ ( '//' if (jitsi_meet_authentication == 'anonymous') else '' ) + 'anonymousdomain: \"guest.' + jitsi_meet_server_name + '\",' }}"
+  notify:
+    - restart jitsi-videobridge
+
+- name: Set authentication domain in jicofo
+  lineinfile:
+    path: "{{jitsi_meet_jicofo_config}}"
+    regexp: 'org.jitsi.jicofo.auth.URL='
+    line: "org.jitsi.jicofo.auth.URL=XMPP:{{jitsi_meet_server_name}}"
+    state: "{{'absent' if (jitsi_meet_authentication == 'anonymous') else 'present'}}"
+  notify:
+    - restart jicofo

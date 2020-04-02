@@ -1,0 +1,10 @@
+# configurations
+- name: Configure jitsi meet
+  lineinfile:
+    path: "{{jitsi_meet_jitsi_config}}"
+    insertbefore: '^};'
+    regexp: '^(.\s*)(//\s)?{{item.key}}:'
+    line: '{{item.key}}: {{item.value}},'
+  with_items: "{{ jitsi_meet_configurations }}"
+  notify:
+    - restart jitsi-videobridge
