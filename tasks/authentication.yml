@@ -37,3 +37,14 @@
     state: "{{'absent' if (jitsi_meet_authentication == 'anonymous') else 'present'}}"
   notify:
     - restart jicofo
+
+- name: Register prosody users
+  command: >
+    prosodyctl register {{item.name}} {{ jitsi_meet_server_name }} {{ item.password }}
+  args:
+    # Yes, prosody actually URL-escapes the directory name for some reason.
+    creates: /var/lib/prosody/{{ jitsi_meet_server_name | replace('.', '%2e') }}/accounts/{{item.name}}.dat
+  with_items: "{{ jitsi_meet_users }}"
+  notify:
+    - restart jicofo
+    - restart prosody

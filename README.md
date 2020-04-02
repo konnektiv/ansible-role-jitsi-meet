@@ -32,9 +32,12 @@ jitsi_meet_server_name: "{{ ansible_fqdn }}"
 # "anonymous" and "internal_plain" is supported
 # when using "internal_plain", this configures jitsi meet as explained here:
 # https://github.com/jitsi/jicofo#secure-domain
-# you have to create users with 
-# `prosodyctl register <username> jitsi-meet.example.com <password>`
 jitsi_meet_authentication: anonymous
+
+# when using internal_plain authentication, you can specify initial users here
+jitsi_meet_users:
+  - name: meet
+    password: test
 
 # A recent privacy-friendly addition, see here for details:
 # https://github.com/jitsi/jitsi-meet/issues/422
@@ -140,6 +143,9 @@ Including an example of how to use your role (for instance, with variables passe
     - role: ansible-role-jitsi-meet
       jitsi_meet_webserver: 'nginx'
       jitsi_meet_authentication: "internal_plain" # "anonymous"
+      jitsi_meet_users:
+        - name: meet
+          password: test
       jitsi_meet_customize_the_ui: true
       jitsi_meet_appname: 'Meet Example Organisation'
       jitsi_meet_org_link: "https://example.de"
