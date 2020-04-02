@@ -170,6 +170,7 @@ MIT
 
 Author Information
 ------------------
+[Konnektiv] 
 
 [Konnektiv]: https://konnektiv.de 
 [Jitsi Meet]: https://github.com/jitsi/jitsi-meet
