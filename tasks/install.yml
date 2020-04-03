@@ -24,7 +24,13 @@
     vtype: "{{ item.vtype }}"
   with_items: "{{ jitsi_meet_debconf_settings }}"
 
-- name: Install webserver
+- name: Remove not used webservers
+  apt:
+    name: "{{jitsi_meet_supported_webservers|difference([jitsi_meet_webserver])}}"
+    state: absent
+  register: server_change
+
+- name: Install webserver {{jitsi_meet_webserver}}
   apt:
     name: "{{jitsi_meet_webserver}}"
     state: latest
@@ -37,3 +43,15 @@
     state: latest
     update_cache: yes
     cache_valid_time: 3600
+
+- name: Force jitsi reconfigure
+  debconf:
+    name: "jitsi-meet"
+    question: "jitsi-meet/jvb-hostname"
+    value: ""
+    vtype: "string"
+  when: server_change.changed
+
+- name: Reconfigure jitsi
+  command: dpkg-reconfigure --frontend=noninteractive jitsi-meet-web-config
+  when: server_change.changed

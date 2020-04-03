@@ -57,8 +57,13 @@ jitsi_meet_debconf_settings:
     value: "{{ jitsi_meet_server_name }}"
     vtype: string
 
-# webserver to use for jitsi meet. Either 'nginx' or 'apache2'
+# webserver to use for jitsi meet. Either 'nginx','nginx-full' or 'apache2'
 jitsi_meet_webserver: nginx
+
+jitsi_meet_supported_webservers:
+  - nginx
+  - nginx-full
+  - apache2
 
 # UI customization
 jitsi_meet_customize_the_ui: false
