@@ -1,0 +1,15 @@
+---
+galaxy_info:
+  author:
+    - Christoph Herbst
+  description: Installs Jitsi Meet videoconferencing software
+  company: Konnektiv
+  license: MIT
+  min_ansible_version: 1.9.4
+  platforms:
+    - name: Debian
+      versions:
+        - jessie
+  categories:
+    - system
+dependencies: []
