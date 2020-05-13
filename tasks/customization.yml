@@ -38,3 +38,17 @@
     mode: "0644"
   when: jitsi_meet_favicon_file is defined
     and jitsi_meet_favicon_file is file
+
+- name: Install custom body page template
+  copy:
+    src: "{{ jitsi_meet_body_template }}"
+    dest: /usr/share/jitsi-meet/body.html
+  when: jitsi_meet_body_template is defined
+    and jitsi_meet_body_template is file
+
+- name: Install custom head template
+  copy:
+    src: "{{ jitsi_meet_head_template }}"
+    dest: /usr/share/jitsi-meet/plugin.head.html
+  when: jitsi_meet_head_template is defined
+    and jitsi_meet_head_template is file
