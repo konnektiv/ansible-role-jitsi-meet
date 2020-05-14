@@ -80,7 +80,9 @@ jitsi_meet_lang_detection: 'false'    # Allow i18n to detect the system language
 jitsi_meet_favicon_file: images/favicon.ico
 jitsi_meet_logo_file: images/jitsilogo.png
 jitsi_meet_watermark_file: images/watermark.png
+# specify custom body.html file here
 jitsi_meet_body_template: ''
+# specify custom plugin.head.html file here
 jitsi_meet_head_template: ''
 
 jitsi_meet_customizations:
