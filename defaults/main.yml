@@ -97,6 +97,8 @@ jitsi_meet_customizations:
   - key: DEFAULT_BACKGROUND
     value: "'{{jitsi_meet_default_background}}'"
 
+jitsi_meet_messages: []
+
 jitsi_meet_configurations:
   - key: startAudioMuted
     value: 10

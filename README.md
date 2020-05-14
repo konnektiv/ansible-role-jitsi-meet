@@ -97,6 +97,30 @@ jitsi_meet_customizations:
   - key: DEFAULT_BACKGROUND
     value: "'{{jitsi_meet_default_background}}'"
 
+# override any message string in jitsi meet. specify language key, jsan group and key name. Look at the file lang/main.json for possible messages.
+# Example:
+jitsi_meet_messages:
+# english description
+- lang: en
+  group: welcomepage
+  key: appDescription
+  value: 'Welcome to my secure video conference system.'
+# german description
+- lang: de
+  group: welcomepage
+  key: appDescription
+  value: 'Willkommen zum sicheren Videokonferenzsystem.'
+# english title
+- lang: en
+  group: welcomepage
+  key: title
+  value: 'My secure video conference system'
+# german title
+- lang: de
+  group: welcomepage
+  key: title
+  value: 'Sicheres Video Koneferenz System'
+
 jitsi_meet_configurations:
   - key: startAudioMuted
     value: 10

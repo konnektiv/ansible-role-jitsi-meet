@@ -52,3 +52,10 @@
     dest: /usr/share/jitsi-meet/plugin.head.html
   when: jitsi_meet_head_template is defined
     and jitsi_meet_head_template is file
+
+- name: Customize application strings
+  replace:
+    path:  "{{ '/usr/share/jitsi-meet/libs/app.bundle.min.js' if item.lang == 'en' else '/usr/share/jitsi-meet/lang/main-' + item.lang + '.json' }}"
+    regexp: '({{item.group}}[\s\S]*{{item.key}}["]?:[\s]*)"[^"]*"'
+    replace: '\1"{{item.value}}"'
+  with_items: "{{ jitsi_meet_messages }}"
